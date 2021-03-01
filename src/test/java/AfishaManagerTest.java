@@ -17,6 +17,8 @@ class AfishaManagerTest {
     private Afisha eighth = new Afisha(8, "Movie.eight", "url.eight", "genre.eight");
     private Afisha ninth = new Afisha(9, "Movie.nine", "url.nine", "genre.nine");
     private Afisha tenth = new Afisha(10, "Movie.ten", "url.ten", "genre.ten");
+    private Afisha eleventh = new Afisha(11, "Movie.eleven", "url.eleven", "genre.eleven");
+    // private Afisha twelve = new Afisha(12, "Movie.twelve", "url.twelve", "genre.twelve");
 
     void setMovie() {
         manager.add(first);
@@ -29,7 +31,8 @@ class AfishaManagerTest {
         manager.add(eighth);
         manager.add(ninth);
         manager.add(tenth);
-
+        manager.add(eleventh);
+        //   manager.add(twelve);
     }
 
     @Test
@@ -44,16 +47,26 @@ class AfishaManagerTest {
         manager = new AfishaManager(10);
         setMovie();
         Afisha[] actual = manager.getNewest();
-        Afisha[] expected = new Afisha[]{tenth, ninth, eighth, seventh, sixth, fivth, fourth, third, second, first};
+        Afisha[] expected = new Afisha[]{eleventh, tenth, ninth, eighth, seventh, sixth, fivth, fourth, third, second};
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldGetAFewNewestFirst() {
-        manager = new AfishaManager(4);
+        manager = new AfishaManager(5);
         setMovie();
         Afisha[] actual = manager.getNewest();
-        Afisha[] expected = new Afisha[]{tenth, ninth, eighth, seventh};
+        Afisha[] expected = new Afisha[]{eleventh, tenth, ninth, eighth, seventh};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    //в данном тесте не задаю количество фильмов, которые хочу, чтобы афиша показала и по умолчанию выпадают 10 последних
+    void shouldntGetMoreThanTen() {
+        manager = new AfishaManager();
+        setMovie();
+        Afisha[] actual = manager.getNewest();
+        Afisha[] expected = new Afisha[]{eleventh, tenth, ninth, eighth, seventh, sixth, fivth, fourth, third, second};
         assertArrayEquals(expected, actual);
     }
 }
